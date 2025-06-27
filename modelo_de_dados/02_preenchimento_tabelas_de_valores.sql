@@ -31,7 +31,7 @@ INSERT INTO dominios.estado_limite_administrativo (identificador,descricao,nome)
 	 ('4','Troço de limite cuja aceitação pelas partes ainda não foi comunicada oficialmente','Não Confirmado'),
 	 ('998','Linha que define exclusivamente parte de um limite, e que se encontra localizado na água','Não Aplicável');
 
-INSERT INTO dominios.nivel_limites_administrativo (identificador,descricao,nome, nome_en) VALUES
+INSERT INTO dominios.nivel_limite_administrativo (identificador,descricao,nome, nome_en) VALUES
 	 ('1','Nível superior da hierarquia administrativa nacional','1ª Ordem','1stOrder '),
 	 ('2','Segundo nível na hierarquia administrativa nacional','2ª Ordem','2ndOrder'),
 	 ('3','Terceiro nível na hierarquia administrativa nacional','3ª Ordem','3rdOrder'),
