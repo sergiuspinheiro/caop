@@ -43,7 +43,7 @@ COMMENT ON TABLE dominios.significado_linha IS 'BST. Descrição do estado de ac
 CREATE TABLE dominios.nivel_limite_administrativo (
 	identificador varchar(3) PRIMARY KEY,
 	nome VARCHAR(100) NOT NULL,
-	descricao VARCHAR NOT NULL
+	descricao VARCHAR NOT NULL,
 	nome_en VARCHAR(100) NOT NULL);
 
 COMMENT ON TABLE dominios.nivel_limite_administrativo IS 'USE. Níveis de administração segundo a hierarquia administrativa nacional';
@@ -51,8 +51,8 @@ COMMENT ON TABLE dominios.nivel_limite_administrativo IS 'USE. Níveis de admini
 CREATE TABLE dominios.tipo_area_administrativa (
 	identificador varchar(3) PRIMARY KEY,
 	nome VARCHAR(100) NOT NULL,
-	descricao VARCHAR NOT NULL),
-	ebm_name VARCHAR(100) NOT NULL;
+	descricao VARCHAR NOT NULL,
+	ebm_name VARCHAR(100) NOT NULL);
 
 COMMENT ON TABLE dominios.nivel_limite_administrativo IS 'TAA. Tipo de área administrativa de acordo com a distribuição administrativa do território nacional';
 
@@ -312,6 +312,9 @@ CREATE TABLE VERSIONING.versoes (
 	data_publicação timestamp
 );
 
+-- Nome do schema onde guardar os resultados, default 'master'
+CREATE SCHEMA master;
+
 -- TODO: ATENCAO As permissões têm de correr depois da criaçao das tabelas de versionamento, caso contrário não terão efeito
 
 -- Criar grupos de utilizadores
@@ -325,7 +328,8 @@ GRANT ALL ON SCHEMA dominios, base, versioning, public TO administrador;
 GRANT ALL ON ALL TABLES IN SCHEMA dominios, base, VERSIONING TO administrador;
 GRANT ALL ON ALL SEQUENCES IN SCHEMA dominios, base, VERSIONING TO administrador;
 GRANT editor, visualizador TO administrador WITH ADMIN OPTION;
-GRANT INSERT, SELECT, UPDATE, DELETE ON TABLE public.qgis_projects TO administrador WITH GRANT OPTION;
+-- É necessário criar a tabela qgis_projects no esquema public. A tabela é criada pelo QGIS ao guardar um projecto qgis na base de dados caop
+-- GRANT INSERT, SELECT, UPDATE, DELETE ON TABLE public.qgis_projects TO administrador WITH GRANT OPTION;
 
 -- Permissões ao nível do editor
 GRANT CONNECT, TEMPORARY ON DATABASE caop TO editor;
@@ -335,10 +339,12 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE base.cont_centroide_ea, base.fonte
 GRANT SELECT, INSERT, TRUNCATE ON TABLE master.cont_poligonos_temp TO editor;
 GRANT SELECT, INSERT ON ALL TABLES IN SCHEMA VERSIONING TO editor;
 GRANT ALL ON ALL SEQUENCES IN SCHEMA VERSIONING TO editor;
-GRANT SELECT ON TABLE public.qgis_projects TO editor;
+-- É necessário criar a tabela qgis_projects no esquema public. A tabela é criada pelo QGIS ao guardar um projecto qgis na base de dados caop
+-- GRANT SELECT ON TABLE public.qgis_projects TO editor;
 
 -- Permissões ao nivel do visualizador
 GRANT CONNECT ON DATABASE caop TO visualizador;
 GRANT USAGE ON SCHEMA dominios, base, VERSIONING TO visualizador;
 GRANT SELECT ON ALL TABLES IN SCHEMA dominios, base, VERSIONING, master TO visualizador;
-GRANT SELECT ON TABLE public.qgis_projects TO visualizador;
+-- É necessário criar a tabela qgis_projects no esquema public. A tabela é criada pelo QGIS ao guardar um projecto qgis na base de dados caop
+-- GRANT SELECT ON TABLE public.qgis_projects TO visualizador;
